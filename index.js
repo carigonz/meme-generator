@@ -1,21 +1,16 @@
-import { getMemes } from './api.js';
+import getMemes from './api.js';
+import { ENDPOINT } from './api.js';
 import {
 	sortAscendent,
 	filterBySize,
 	getOrdererProperties
 } from './functions.js';
 
-const ENDPOINT = getMemes('https://api.imgflip.com/get_memes');
-//console.log(ENDPOINT);
-
-const hola = ENDPOINT.then(originalFetchedData =>
-	getProperties(originalFetchedData)
-)
-	.then(memesArray => {
-		const pepe = getFormated(memesArray);
-		console.table(pepe);
-		return pepe;
-	})
+getMemes(ENDPOINT)
+	.then(getProperties)
+	.then(getFormated)
+	.then(getMemeOfTheDay)
+	.then(console.dir)
 	.catch(error => console.log(error.message));
 
 function getProperties(fetchedData) {
