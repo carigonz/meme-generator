@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css?family=Barlow&display=swap');
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+		'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+:root {
+	--green: #1b998b;
+	--pink: #ed217c;
+	--lg-blue: #55ddff;
+	--yellow: #fffd82;
+	--lg-orange: #ff9b71;
+	--white: #fafafa;
+	--black: #000;
+	--blue: #0099cc;
+}
+h1,
+h2 {
+	font-family: 'Barlow';
+}
+.container {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+}
+.title {
+	padding: 30px 0px;
+}
+.btn-get-random-meme {
+	padding: 8px 20px;
+	border: 1px solid var(--blue);
+	border-radius: 15px;
+	margin: 30px;
+	color: var(--green);
+	background: transparent;
+	transition-duration: 0.4s;
+}
+.btn-get-random-meme:hover {
+	background: var(--blue);
+	color: var(--white);
+	border: 1px solid var(--lg-blue) inset;
+}
