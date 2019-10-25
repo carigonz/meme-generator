@@ -6,17 +6,24 @@ import {
 	getOrdererProperties
 } from './functions.js';
 
+let memesArray = [];
+let meme = [];
+
 getMemes(ENDPOINT)
 	.then(getProperties)
 	.then(getFormated)
-	.then(getMemeOfTheDay)
+	.then(memes => {
+		memesArray = memes.slice();
+		meme = getMemeOfTheDay(memesArray);
+		console.log(memesArray);
+		img.src = meme.url;
+	})
 	.then(console.dir)
 	.catch(error => console.log(error.message));
 
 function getProperties(fetchedData) {
 	const data = fetchedData.data.memes;
-	const memesArray = getOrdererProperties(data);
-	return memesArray;
+	return getOrdererProperties(data);
 }
 
 function getFormated(array) {
@@ -32,3 +39,13 @@ function getMemeOfTheDay(memeArray) {
 	const date = new Date();
 	return memeArray[date.getDate()];
 }
+
+const title = document.querySelector('h1');
+const button = document.querySelector('.btn-get-random-meme');
+const img = document.querySelector('.memeimg');
+button.addEventListener('click', () => {
+	title.innerText = 'Random Meme';
+	button.innerText = 'Get another random meme!';
+	meme = getRandomMeme(memesArray);
+	img.src = meme.url;
+});
