@@ -1,5 +1,5 @@
 export function filterBySize(array) {
-	return array.filter(meme => meme.width > 500 && meme.height > 500);
+	return array.filter(({ width, height }) => width > 500 && height > 500);
 }
 
 export function sortAscendent(array) {

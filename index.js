@@ -1,27 +1,29 @@
-import { getMemes } from './api.js';
+import getMemes from './modules/api.js';
+import { ENDPOINT } from './modules/api.js';
 import {
 	sortAscendent,
 	filterBySize,
 	getOrdererProperties
-} from './functions.js';
+} from './modules/functions.js';
 
-const ENDPOINT = getMemes('https://api.imgflip.com/get_memes');
-//console.log(ENDPOINT);
+let memesArray = [];
+let meme = [];
 
-const hola = ENDPOINT.then(originalFetchedData =>
-	getProperties(originalFetchedData)
-)
-	.then(memesArray => {
-		const pepe = getFormated(memesArray);
-		console.table(pepe);
-		return pepe;
+getMemes(ENDPOINT)
+	.then(getProperties)
+	.then(getFormated)
+	.then(memes => {
+		memesArray = memes.slice();
+		meme = getMemeOfTheDay(memesArray);
+		console.log(memesArray);
+		img.src = meme.url;
+		hoverText.innerText = meme.name;
 	})
 	.catch(error => console.log(error.message));
 
 function getProperties(fetchedData) {
 	const data = fetchedData.data.memes;
-	const memesArray = getOrdererProperties(data);
-	return memesArray;
+	return getOrdererProperties(data);
 }
 
 function getFormated(array) {
@@ -35,5 +37,17 @@ function getRandomMeme(memeArray) {
 
 function getMemeOfTheDay(memeArray) {
 	const date = new Date();
-	return memeArray[date.getDate()];
+	return memeArray[date.getDate() - 1];
 }
+
+const title = document.querySelector('h1');
+const button = document.querySelector('.btn-get-random-meme');
+const img = document.querySelector('.meme-img');
+const hoverText = document.querySelector('.hover-img-text');
+button.addEventListener('click', () => {
+	title.innerText = 'Random Meme';
+	button.innerText = 'Get another random meme!';
+	meme = getRandomMeme(memesArray);
+	img.src = meme.url;
+	hoverText.innerText = meme.name;
+});
